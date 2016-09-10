@@ -1,15 +1,31 @@
 body {
-    background-color: lightgray;
+    background-color: #F0F0F0;
+    font-family: Lato, sans-serif;
+
+    text-align: center;
+    margin: 10% auto;
+    max-width: 90%;
 }
 
-h1, h3, div {
-    margin: auto;
-    width: 50%;
-    padding: 70px;
-    font-family: Verdana;
+div {
+    max-width: inherit;
+    margin: 5px auto;
 }
 
-span.github {
+/* Icons */
+
+span.icon {
+    background-size: 50px 50px;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: auto 5px;
+}
+
+span.icon-github {
     background-image: url(icons/github.svg);
-    background-size: 100px 100px;
+}
+
+span.icon-twitter {
+    background-image: url(icons/twitter.svg);
 }
