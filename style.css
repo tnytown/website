@@ -23,9 +23,9 @@ span.icon {
 }
 
 span.icon-github {
-    background-image: url(icons/github.svg);
+    content: url(icons/github.svg);
 }
 
 span.icon-twitter {
-    background-image: url(icons/twitter.svg);
+    content: url(icons/twitter.svg);
 }
