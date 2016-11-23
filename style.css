@@ -29,3 +29,7 @@ span.icon-github {
 span.icon-twitter {
     content: url(icons/twitter.svg);
 }
+
+span.icon-keybase {
+    content: url(icons/keybase.svg);
+}
