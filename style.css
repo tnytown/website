@@ -1,31 +1,37 @@
 body {
     background-color: #F0F0F0;
-    font-family: Lato, sans-serif;
-
-    text-align: center;
-    margin: 10% auto;
-    max-width: 90%;
+/* font-family: Lato, sans-serif; */
 }
 
-div {
-    max-width: inherit;
-    margin: 5px auto;
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#links {
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Icons */
 
 span.icon {
-    background-size: 50px 50px;
     display: inline-block;
-    width: 50px;
-    height: 50px;
-    margin: auto 5px;
+    width: 128px;
+    height: 128px;
+    margin: auto 16px;
+    flex: 1;
 }
 
 span.icon-github {
     content: url(icons/github.svg);
 }
 
+/* TODO: what's up with the padding built in? */
 span.icon-twitter {
     content: url(icons/twitter.svg);
 }
