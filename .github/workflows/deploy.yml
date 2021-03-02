@@ -20,6 +20,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git fetch origin deploy || true
           git checkout -B deploy
+          git merge --ff-only FETCH_HEAD
           git merge -m "automerge" master
           cp -r result/ public/
           git add public/
