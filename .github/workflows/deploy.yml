@@ -17,7 +17,7 @@ jobs:
       - name: deploy site
         run: |
           git checkout -B deploy
-          cp -r result public
+          cp -r result/ public/
           git add public/
           git commit -m "public: deploy site"
           git push --force-with-lease
