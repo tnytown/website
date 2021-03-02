@@ -1,0 +1,20 @@
+name: "Deploy"
+on:
+  push: master
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: nixbuild/nix-quick-install-action@v5
+        with:
+          nix_version: 2.4pre20201201_5a6ddb3
+          nix_conf: experimental-features = nix-command flakes
+      - name: nix build
+        run: nix build .#site
+      - name: deploy site
+        run: |
+          git checkout -B deploy
+          cp result/ public/
+          git add public/
+          git commit -m "public: deploy site"
