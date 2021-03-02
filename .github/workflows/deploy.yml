@@ -13,7 +13,7 @@ jobs:
           nix_version: 2.4pre20201205_a5d85d0
           nix_conf: experimental-features = nix-command flakes
       - name: nix build
-        run: nix build .#site
+        run: nix build -L .#site
       - name: deploy site
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
