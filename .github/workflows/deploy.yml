@@ -22,4 +22,4 @@ jobs:
           cp -r result/ public/
           git add public/
           git commit -m "public: deploy site"
-          git push --force-with-lease
+          git push --force-with-lease origin deploy
