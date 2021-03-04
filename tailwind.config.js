@@ -6,6 +6,9 @@ module.exports = {
     darkMode: false, // TODO: dark mode toggle
     theme: {
         extend: {
+            minHeight: {
+                'stretch': 'stretch'
+            },
             typography: (theme) => ({
                 'dark': {
                     css: {

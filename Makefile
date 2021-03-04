@@ -3,6 +3,7 @@
 n2n:
 	node2nix --development -l package-lock.json -c node-attrs.nix
 
+URL=127.0.0.1
 dev:
-	zola serve &
+	zola serve -i 0.0.0.0 -u $(URL) -p 8080 &
 	npx postcss sass/index.scss -o public/index.css -w
