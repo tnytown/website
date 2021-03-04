@@ -18,11 +18,8 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git fetch origin deploy || true
-          git checkout -B deploy
-          git merge --ff-only FETCH_HEAD
-          git merge -m "automerge" master
+          git checkout -b deploy
           cp -r result/ public/
           git add public/
           git commit -m "public: deploy site"
-          git push --force-with-lease origin deploy
+          git push --force origin deploy
