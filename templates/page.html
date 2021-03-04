@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="">
+  <header>
+    <nav class="p-8 text-2xl font-mono">
+      <ul class="m-auto">
+        {% for item in config.extra.menu %}
+        <li class="my-2"><a href="{{ item.url }}">{{ item.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block main %}{% endblock %}
+  </main>
+</div>
+{% endblock content %}

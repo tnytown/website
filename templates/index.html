@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="flex flex-col h-screen w-screen">
+  {#  {% if config.extra.after_dark_title %}
+  <header>
+    <h1>{{ config.extra.after_dark_title }}</h1>
+  </header>
+  {% endif %}
+  {% for page in paginator.pages %}
+  {{ post_macros::page_in_list(page=page) }}
+  {% endfor %}
+
+  <nav>
+    <p>
+      {% if paginator.previous %}
+      <a href="{{ paginator.previous }}">&laquo; Previous</a> |
+      {% endif %}
+      <span>Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span>
+      {% if paginator.next %}
+      | <a href="{{ paginator.next }}">Next &raquo;</a>
+      {% endif %}
+    </p>
+  </nav> #}
+  <div class="md:flex items-center m-auto md:divide-x-2 divide-solid">
+    <div class="p-8">
+      <h1 class="text-4xl my-2">doing bad things poorly</h1>
+      <h2 class="text-2xl my-2">channeled by Andrew Pan</h2>
+    </div>
+    <nav class="p-8 text-2xl font-mono">
+      <ul class="m-auto">
+        {% for item in config.extra.menu %}
+        <li class="my-2"><a class="hover:underline" href="{{ item.url }}">{{ item.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</main>
+{% endblock content %}

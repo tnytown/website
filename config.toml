@@ -1,6 +1,8 @@
 # The URL the site will be built for
 base_url = "https://unown.me"
 
+title = "doing bad things poorly"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = false
 
@@ -13,3 +15,8 @@ build_search_index = false
 
 [extra]
 # Put all your custom variables here
+menu = [
+     { url = "/blog", name = "posts" },
+     { url = "/about", name = "about" },
+     { url = "https://github.com/knownunown", name = "github" },
+]

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main %}
+<section class="prose prose-dark prose-xl">
+{{ section.content | safe }}
+</section>
+
+<ul>
+  {% for page in section.pages %}
+  <li class="text-xl list-decimal list-inside">
+    <a class="text-yellow-500 hover:underline" href="{{ page.permalink | safe }}">{{ page.title }}</a> |
+    <span>{{ page.date }}</span> |
+    <span>~{{ page.word_count }} words</span>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
