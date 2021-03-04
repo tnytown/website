@@ -17,7 +17,9 @@
 
           buildInputs = with pkgs; [ zola ];
           dontInstall = true;
-          buildPhase = "zola build -o $out";
+          buildPhase = ''
+echo "${self.shortRev or "unknown"}" >rev.json
+zola build -o $out'';
         };
       });
 }
