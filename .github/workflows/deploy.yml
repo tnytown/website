@@ -21,6 +21,6 @@ jobs:
           git checkout -b deploy
           cp -r result/ public/
           touch {,public/}.nojekyll
-          git add .nojekyll public/
+          git add -f .nojekyll public/
           git commit -m "public: deploy site"
           git push --force origin deploy
