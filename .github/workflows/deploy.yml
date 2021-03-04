@@ -20,6 +20,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git checkout -b deploy
           cp -r result/ public/
-          git add public/
+          touch {,public/}.nojekyll
+          git add .nojekyll public/
           git commit -m "public: deploy site"
           git push --force origin deploy
