@@ -41,8 +41,12 @@
         {% block main %}{% endblock %}
       </main>
       {% set rev = load_data(path="rev.json") %}
-      <footer class="p-4 text-gray-400">Content CC-BY-SA 4.0. Built with Zola and Nix. Revision {{ rev }}.<aside class="hidden">Void where
-          prohibited. No warranty, express or implied. Phosphate free.</aside></footer>
+      <footer class="p-4 text-gray-400">Content CC-BY-SA 4.0. Built with Zola and
+          Nix. Revision <a class="hover:underline"
+          href="https://github.com/knownunown/website/commit/{{ rev }}">{{ rev }}</a>.
+        <aside class="hidden">Void where prohibited. No warranty, express or implied. Phosphate
+          free.</aside>
+      </footer>
     </div>
     {% endblock content %}
   </body>
