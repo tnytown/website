@@ -25,9 +25,8 @@ Also of interest is the method with which this heatsink is mounted to the board.
 
 With these constraints in mind, I selected a heatsink suitable for the MOSFETs from [Amazon](https://smile.amazon.com/gp/product/B077VQTB6Q/) at the suggestion at the suggestion of [this Reddit post](https://old.reddit.com/r/sffpc/comments/daj1rd/vrm_heatsink_swap_on_asrock_x570_itxtb3/). They look like this:
 
-![photo of heatsink, laptop keyboard for scale](147FFDD9-4605-47FE-BEB6-061F02C46ABD.jpeg)
+{{ imgcap(alt="photo of heatsink, laptop keyboard for scale", src="147FFDD9-4605-47FE-BEB6-061F02C46ABD.jpeg", cap=""Sorry for the terrible photo.") }}
 
-Sorry for the terrible photo.
 
 These heatsinks are around 6.5x6.5x10mm. The base has a lip that I used to secure the heatsink to the motherboard with a part that I designed with SCAD.
 
