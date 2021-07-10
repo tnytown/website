@@ -227,4 +227,4 @@ I've learnt that programming without the standard library is painful [^6]. Later
 
 [^5]: `mklibsysc` only generates wrappers for syscalls specified in the input, which is why there are only 5 in the list.
 
-[^7]: To be honest though, it's not that big of a downgrade when compared to libc.
+[^6]: To be honest though, it's not that big of a downgrade when compared to libc.
