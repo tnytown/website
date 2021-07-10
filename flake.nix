@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/release-20.09";
+    nixpkgs.url = "nixpkgs/release-21.05";
     utils.url = "github:numtide/flake-utils";
   };
 
@@ -10,7 +10,7 @@
           nodeDeps = (pkgs.callPackage ./node-attrs.nix {}).shell.nodeDependencies;
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ zola nodejs nodePackages.node2nix ];
+          buildInputs = with pkgs; [ zola nodejs pandoc nodePackages.node2nix ];
         };
         packages.site = pkgs.stdenv.mkDerivation {
           name = "site";
