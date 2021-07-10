@@ -14,17 +14,18 @@
         };
         packages.site = pkgs.stdenv.mkDerivation {
           name = "site";
-          src = self;
+          src = pkgs.nix-gitignore.gitignoreSource [] ./.;
 
           buildInputs = with pkgs; [ zola nodejs ];
-          dontInstall = true;
+          phases = [ "unpackPhase" "buildPhase" ];
           buildPhase = ''
-ln -s ${nodeDeps}/lib/node_modules ./node_modules
-export PATH="${nodeDeps}/bin:$PATH"
-npx postcss --env production sass/index.scss -o static/index.css
-echo \"${self.shortRev or "unknown"}\" >rev.json
-zola build -o $out
-'';
+            ln -s ${nodeDeps}/lib/node_modules ./node_modules
+            export PATH="${nodeDeps}/bin:$PATH"
+
+            npx postcss --env production sass/index.scss -o static/index.css
+            echo \"${self.shortRev or "unknown"}\" >rev.json
+            zola build -o $out
+          '';
         };
       });
 }
