@@ -1504,7 +1504,7 @@ let
     name = "website";
     packageName = "website";
     version = "1.0.0";
-    src = ./.;
+    src = ./..;
     dependencies = [
       sources."@babel/code-frame-7.12.13"
       sources."@babel/helper-validator-identifier-7.12.11"

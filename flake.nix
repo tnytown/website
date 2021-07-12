@@ -7,7 +7,7 @@
   outputs = { self, nixpkgs, utils }: utils.lib.eachDefaultSystem
     (system:
       let pkgs = nixpkgs.legacyPackages.${system};
-          nodeDeps = (pkgs.callPackage ./node-attrs.nix {}).shell.nodeDependencies;
+          nodeDeps = (pkgs.callPackage ./nix/node-attrs.nix {}).shell.nodeDependencies;
       in {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [ zola nodejs pandoc nodePackages.node2nix ];
