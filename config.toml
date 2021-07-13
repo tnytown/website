@@ -13,6 +13,7 @@ highlight_code = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
 
+# feed_filename = "rss.xml" whatever, we want atom anyways
 generate_feed = true
 
 minify_html = true
