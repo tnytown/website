@@ -8,19 +8,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <title>{% block title %}{{ config.title | title }}{% endblock title %}</title>
 
     {% block css %}
     <link rel="stylesheet" href="/index.css">
     {% endblock css %}
 
-    {% block head %}
-    <meta property="og:title" content="{{ config.title }}" />
+    {% block meta %}
+    <meta property="og:title" content="{{ config.title | title }}" />
     <meta property="og:description"
           content="An expert in the field of doing things wrongly for over 20 years, Andrew Pan lends us his expertise in a series of long-form blog posts." />
+    <meta property="og:type" content="website" />
+    {% endblock meta %}
     <meta property="og:image" content="/apple-touch-icon-180x180.png" />
     <meta property="og:url" content="{{ current_url }}" />
-    {% endblock head %}
 
     {% block rss %}
     <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">

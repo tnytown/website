@@ -1,6 +1,8 @@
 +++
 title = "syscalling for fun and (no) profit"
 date = 2021-02-28
+
+description = "A shallow exploration of the Linux userspace interface with poorly written C and the fish shell."
 [taxonomies]
 tags = ["systems", "linux", "fish"]
 +++

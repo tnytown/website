@@ -1,6 +1,8 @@
 +++
 title = "about"
 template = "blog-page.html"
+[taxonomies]
+tags = []
 +++
 
 ### what's this?

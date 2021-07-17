@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
+{% block meta %}
+<meta property="og:title" content="{{ page.title | title }}" />
+<meta property="og:description" content="{{ page.description }}" />
+<meta property="og:type" content="article" />
+{% for tag in page.taxonomies.tags %}
+<meta property="og:article:tag" content="{{ tag }}" />
+{% endfor %}
+{% endblock meta %}
+
 {% block main %}
 <article class="px-4">
   <h1 class="text-3xl mb-2">{{ page.title }}</h1>
