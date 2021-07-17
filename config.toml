@@ -25,3 +25,4 @@ menu = [
      { url = "/about", name = "about" },
      { url = "https://github.com/knownunown", name = "github" },
 ]
+author = "Andrew Pan"
