@@ -12,6 +12,10 @@ jobs:
         with:
           nix_version: 2.4pre20201205_a5d85d0
           nix_conf: experimental-features = nix-command flakes
+      - uses: cachix/cachix-action@v10
+        with:
+          name: knownunown
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: nix build
         run: nix build -L .#site
       - name: deploy site
