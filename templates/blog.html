@@ -5,13 +5,13 @@
 {{ section.content | safe }}
 </section>
 
-<ul>
+<ol class="grid grid-cols-6" reversed>
   {% for page in section.pages %}
-  <li class="text-xl list-decimal list-inside">
-    <a class="text-yellow-500 hover:underline" href="{{ page.permalink | safe }}">{{ page.title }}</a> |
-    <span>{{ page.date }}</span> |
-    <span>~{{ page.word_count }} words</span>
+  <li class="col-span-4 text-xl list-decimal list-inside">
+    <a class="text-yellow-500 hover:underline" href="{{ page.permalink | safe }}">{{ page.title }}</a>
   </li>
+    <span class="col-span-1">{{ page.date }}</span>
+    <span class="col-span-1 text-right">~{{ page.word_count }} words</span>
   {% endfor %}
-</ul>
+</ol>
 {% endblock %}
