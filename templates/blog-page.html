@@ -2,9 +2,11 @@
 
 {% block meta %}
 <meta property="og:title" content="{{ page.title | title }}" />
+<meta property="og:site_name" content="{{ config.title | title }}" />
 <meta property="og:description" content="{{ page.description }}" />
 <meta property="og:type" content="article" />
-<meta property="article:author" content="{{ config.extra.author }}">
+<meta property="author" content="{{ config.extra.author }}" />
+<meta property="article:author" content="{{ config.extra.author }}" />
 {% for tag in page.taxonomies.tags %}
 <meta property="article:tag" content="{{ tag }}" />
 {% endfor %}
