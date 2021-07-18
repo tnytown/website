@@ -1,6 +1,8 @@
 +++
-title = "x570 itx tb3 heatsink"
+title = "X570 ITX TB3 heatsink"
 date = 2021-01-05
+
+description = "Fixing the egregious mistakes made by gaming™ motherboard manufacturers."
 [taxonomies]
 tags=["3dprinting"]
 +++
