@@ -27,7 +27,7 @@ jobs:
           cp -r result/ docs/
           chmod -R u+w docs/
           touch {,docs/}.nojekyll
-          echo "unown.me" >docs/CNAME
+          cp CNAME docs/
           git add .nojekyll docs/
           git commit -m "public: deploy site"
           git push --force origin deploy
