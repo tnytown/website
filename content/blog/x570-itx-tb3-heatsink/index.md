@@ -7,8 +7,6 @@ description = "Fixing the egregious mistakes made by gaming™ motherboard manuf
 tags=["3dprinting"]
 +++
 
-## the problem
-
 The default upper MOSFET heatsink on the ASRock X570 ITX TB3 is too big. It's unwieldy, blocks airflow, and worst of all, not better at sinking heat when compared to smaller solutions.
 
 <!-- more -->
@@ -34,6 +32,8 @@ These heatsinks are around 6.5x6.5x10mm. The base has a lip that I used to secur
 
 {{ imgcap(src="Untitled.png" alt="screenshot of OpenSCAD" cap="Ignore all the duplicate statements
 and magic numbers. It works, I swear!")}}
+
+The SCAD sources are available [here](https://github.com/knownunown/prints/blob/main/mobo_heatsink.scad).
 
 ## results
 
