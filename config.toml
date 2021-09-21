@@ -21,8 +21,9 @@ minify_html = true
 [extra]
 # Put all your custom variables here
 menu = [
-     { url = "/blog", name = "posts" },
+     { url = "/posts", name = "posts" },
      { url = "/about", name = "about" },
+     { url = "/cv.pdf", name = "cv" },
      { url = "https://github.com/knownunown", name = "github" },
 ]
 author = "Andrew Pan"
