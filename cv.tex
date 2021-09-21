@@ -14,18 +14,14 @@
 
 %% LaTeX font stuff: serif font
 \usepackage{ebgaramond}
-%\usepackage{mathpazo}
+% \usepackage{mathpazo}
 % \renewcommand{\familydefault}{\sfdefault}
 % \renewcommand{\rmdefault}{}
 \renewcommand{\sfdefault}{\rmdefault}
 
-% make our bullets arrows
-\renewcommand\labelitemi{$\Rightarrow$}
-
 \usepackage[utf8]{inputenc}
 \usepackage[scale=0.9]{geometry}
 \usepackage{luacode} % nooooo
-
 
 %% Personal data
 \firstname{Andrew}
@@ -56,7 +52,7 @@ rev = utilities.json.tolua(s)
 }
 
 \makecvtitle{}
-\vspace*{-5mm} % decrease space between header and body
+\vspace*{-15mm} % decrease header padding
 
 \section{Education}
 \cventry{2019--present}
@@ -80,9 +76,10 @@ rev = utilities.json.tolua(s)
 \cvitem{Adamala-Engelhart Lab\\2021-present}
 {
   Undergraduate Research Assistant at the Adamala-Engelhart Lab of the University of Minnesota.
-  \begin{itemize}[label=\textbullet,noitemsep]
+  \begin{itemize}[label=\rightarrow,noitemsep]
   \item Maintaining a predominantly Python Flask+SQLAlchemy app to enable research with synthetic biology of cyanobacteria.
   \item Retrofitting a novel and intuitive VueJS interface on top of the Flask app.
+  \item Exploring novel applications of computing to synthetic biology research.
   \end{itemize}
 }
    
@@ -90,9 +87,9 @@ rev = utilities.json.tolua(s)
 \cvitem{ACM UMN\\2020--present}
 {
   Officer (webmaster) for ACM UMN, the local chapter of the Association for Computing Machinery.
-  \begin{itemize}[label=\textbullet,noitemsep]
-  \item Involved in planning the first and only online MinneHack (largest hackathon in Minnesota). Prepared online promotional materials and executed a non-traditional hackathon structure, collaborating with other ACM officers.
-  \item Currently maintaining web presence for the ACM UMN, a static site checked with GitHub Actions CI.
+  \begin{itemize}[label=\rightarrow,noitemsep]
+  \item Involved in planning the first and only online MinneHack (largest hackathon in Minnesota). Prepared promotional materials and executed a non-traditional hackathon structure, collaborating with other ACM officers.
+  \item Currently maintaining web presence for the ACM UMN, static sites checked with GitHub Actions CI and Nix.
   \item Continuing to plan events and engaging with students interested in computing.
   \end{itemize}
 }
@@ -100,7 +97,7 @@ rev = utilities.json.tolua(s)
 \cvitem{UMN SVP\\2019--2020}
 {
   Member of the Controls subteam on the UMN Solar Vehicle Project.
-  \begin{itemize}[label=\textbullet,noitemsep]
+  \begin{itemize}[label=\rightarrow,noitemsep]
   \item Worked on design of the rearview system and integrated USB tethered logging for the telemetry system.
   \item Prototyped an editor for a YAML-based CAN packet definition schema in Rust.
   \item Participated extensively in build cycle (layups) for the Freya vehicle, which won 1st place at the Formula Sun Grand Prix.
@@ -134,23 +131,23 @@ rev = utilities.json.tolua(s)
 
 \section{Personal Projects and Open Source Contributions}
 \cvline{}{
-  \textit{\href{https://github.com/knownunown}{\faGithub\ \underline{Check out more on my github profile}!}}
+  \textit{\href{https://github.com/knownunown}{\faGithub\ \underline{Check out more on my GitHub profile}!}}
 }
 
 \ghsubsection{tpl-c900-openwrt-install}
 \cvitem{keywords}{reverse engineering, embedded, unix, lua, go}
-\cvitem{description}{Broke firmware verification scheme on the TP-Link Archer C900, a consumer
+\cvitem{}{Broke firmware verification scheme on the TP-Link Archer C900, a consumer
   router. Installed open source router firmware (OpenWRT). Documented process.}
 
 \ghsubsection{u2dl}
 \cvitem{keywords}{web, fish, unix, ffmpeg}
-\cvitem{description}{Developed shell script to download YouTube videos. Bypassed the ``rolling
-  cipher''. Wrote an accompanying minifier to compress the script down \char`\~291\%, final size
-  2kb.}
+\cvitem{}{Developed Fish shell script to download YouTube videos. Bypassed the ``rolling cipher''
+  with standard Unix tools. Wrote an accompanying minifier to compress the script down
+  \char`\~291\%, final size 2kb.}
 
 \ghsubsection{J2V8}
 \cvitem{keywords}{cpp, nodejs, android, docker}
-\cvitem{description}{Ported J2V8, Java bindings for the NodeJS JavaScript engine, to
+\cvitem{}{Ported J2V8, Java bindings for the NodeJS JavaScript engine, to
   Android. Automated build process with a Docker image. Submitted changes to upstream.}
 
 \end{document}
