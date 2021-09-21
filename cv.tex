@@ -49,8 +49,11 @@ f:close()
 rev = utilities.json.tolua(s)
 \end{luacode}
 
-\newcommand{\githash}{\href{https://github.com/knownunown/website/blob/\luadirect{tex.sprint(rev)}/cv.tex}
-  {\luadirect{tex.sprint(rev)}}}
+\newcommand{\githash}
+{
+  \href{https://github.com/knownunown/website/blob/\luadirect{tex.sprint(rev)}/cv.tex}
+  {\texttt{\luadirect{tex.sprint(rev)}}}
+}
 
 \makecvtitle{}
 \vspace*{-5mm} % decrease space between header and body
