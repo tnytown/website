@@ -1,4 +1,4 @@
 +++
-title = "Doing Wrong Things Incorrectly"
+title = "Doing Bad Things Poorly"
 template = "index.html"
 +++
