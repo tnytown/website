@@ -38,8 +38,8 @@
             <li class="mx-2 inline md:float-left"><a class="hover:underline" href="/">home</a></li>
             {% for item in config.extra.menu %}
             <li class="mx-2 inline"><a class="{% if item.url is containing(navname) %}underline
-            hover:no-underline{% else %}hover:underline{% endif %}" href="{{ item.url }}">{{
-            item.name }}</a></li> {% endfor %}
+            hover:no-underline{% else %}hover:underline{% endif %}" href="{{ item.url }}">{{ item.name }}</a></li>
+            {% endfor %}
           </ul>
         </nav>
       </header>
