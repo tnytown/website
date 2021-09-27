@@ -18,21 +18,11 @@
   <div class="hidden md:flex flex-col m-auto items-center">
     {% set posts = get_section(path="posts/_index.md") %}
     {% set post = posts.pages.0 %}
-    <span class="text-3xl">latest post: {{ post.title }}</span>
+    <h1 class="text-3xl">latest post: {{ post.title }}</h1>
     <article class="my-2">
       <div class="prose prose-lg prose-dark prose-yellow max-w-xl">{{ post.summary | safe }}</div>
     </article>
     <a class="hover:underline text-1xl" href="{{ post.permalink }}">read more →</a>
-
-    {#
-    {% for page in section.pages %}
-    <li class="grid grid-cols-6 text-xl list-decimal list-inside">
-      <a class="col-span-4 text-yellow-500 hover:underline" href="{{ page.permalink | safe }}">{{ page.title }}</a>
-      <span class="col-span-1">{{ page.date }}</span>
-      <span class="col-span-1 text-right">~{{ page.word_count }} words</span>
-    </li>
-    {% endfor %}
-    #}
   </div>
 </main>
 {% endblock content %}
