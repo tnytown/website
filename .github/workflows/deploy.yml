@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: nixbuild/nix-quick-install-action@v5
+      - uses: nixbuild/nix-quick-install-action@v11
         with:
-          nix_version: 2.4pre20201205_a5d85d0
+          nix_version: 2.6.1
           nix_conf: experimental-features = nix-command flakes
       - uses: cachix/cachix-action@v10
         with:
