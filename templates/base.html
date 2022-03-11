@@ -35,7 +35,17 @@
       <header class="w-full">
         <nav class="p-4 text-2xl font-mono w-full">
           <ul class="m-auto w-full text-center md:text-right"> {# evil alignment hacks #}
-            <li class="mx-2 inline md:float-left"><a class="hover:underline" href="/">home</a></li>
+              <li class="mx-2 inline md:float-left">
+                  <a class="mx-auto group" href="/">
+                    {# img has display: block preset. no clue why. #}
+                    <img class="w-8 h-8 inline rounded-full group-hover:outline" src='{{ get_url(path="sakamoto.png") }}' alt="home">
+                    <span class="hidden origin-bottom -z-10 md:group-hover:inline-block
+                                 md:scale-75 md:translate-x-[-25%] md:group-hover:animate-meow
+                                 font-meow">
+                      meow!
+                    </span>
+                  </a>
+              </li>
             {% for item in config.extra.menu %}
             <li class="mx-2 inline"><a class="{% if item.url is containing(navname) %}underline
             hover:no-underline{% else %}hover:underline{% endif %}" href="{{ item.url }}">{{ item.name }}</a></li>

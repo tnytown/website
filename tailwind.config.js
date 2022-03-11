@@ -1,13 +1,22 @@
 module.exports = {
+    mode: 'jit',
     content: [
         './content/**/*.md',
         './templates/**/*.html',
     ],
     theme: {
         extend: {
-            minHeight: {
-                'stretch': 'stretch'
+            fontFamily: {
+                meow: ['Recursive', 'sans-serif'],
             },
+            keyframes: {
+                'meow': {
+                    '0%': { transform: 'translate(-50%) scale(0.5)' },
+                    '100%': { transform: 'translate(-25%) scale(0.75)' },
+                },
+            },
+            animation: { 'meow': 'meow 0.125s linear' },
+            minHeight: { 'stretch': 'stretch' },
             typography: (theme) => ({
                 'dark': {
                     css: {
@@ -47,9 +56,6 @@ module.exports = {
                 }
             }),
         }
-    },
-    variants: {
-        extend: {},
     },
     plugins: [
         require('@tailwindcss/typography'),
