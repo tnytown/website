@@ -1,9 +1,8 @@
 module.exports = {
-    purge: [
+    content: [
         './content/**/*.md',
         './templates/**/*.html',
     ],
-    darkMode: false, // TODO: dark mode toggle
     theme: {
         extend: {
             minHeight: {
