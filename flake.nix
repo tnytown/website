@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/release-21.05";
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     utils.url = "github:numtide/flake-utils";
   };
 
@@ -8,21 +8,12 @@
     (system:
       let pkgs = nixpkgs.legacyPackages.${system};
           lib = nixpkgs.lib;
-          nodeDeps = (pkgs.callPackage ./nix/node-attrs.nix {}).shell.nodeDependencies;
-          zolaNext = pkgs.zola.overrideAttrs(o: rec {
-            version = "next-2021-02-06";
-            src = pkgs.fetchFromGitHub {
-              owner = "getzola";
-              repo = o.pname;
-              rev = "a65a2d52c70def075d8b4ed4c57dfd81b1f96ba3";
-              hash = "sha256-xBzKT6Fdo95b6qFahN+x7v078rFyCsaI0fPZeLLz+iY=";
-            };
-            cargoDeps = o.cargoDeps.overrideAttrs (lib.const {
-              name = "${o.pname}-${version}-vendor.tar.gz";
-              inherit src;
-              outputHash = "sha256-N79lrFqugJCky43bAKVPumNPqq9DECbmNtdNJR4T0oE=";
-            });
-          });
+          yarnDeps = pkgs.mkYarnPackage rec {
+            name = "site-styles";
+            src = ./.;
+            packageJSON = "${src}/package.json";
+            yarnLock = "${src}/yarn.lock";
+          };
           texenv = (pkgs.texlive.combine {
             inherit (pkgs.texlive)
               scheme-small
@@ -40,7 +31,7 @@
           });
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ texenv tectonic zolaNext nodejs nodePackages.node2nix ];
+          buildInputs = with pkgs; [ texenv tectonic zola nodejs yarn ];
         };
         packages = rec {
           texdbg = pkgs.mkShell {
@@ -64,16 +55,15 @@
             '';
           };
 
+          inherit yarnDeps;
           site = pkgs.stdenvNoCC.mkDerivation {
             name = "site";
             src = pkgs.nix-gitignore.gitignoreSource [] ./.;
 
-            buildInputs = with pkgs; [ zolaNext nodejs ];
+            buildInputs = with pkgs; [ zola nodejs ];
             phases = [ "unpackPhase" "buildPhase" ];
             buildPhase = ''
-            ln -s ${nodeDeps}/lib/node_modules ./node_modules
-            export PATH="${nodeDeps}/bin:$PATH"
-
+            ln -s ${yarnDeps}/libexec/website/node_modules .
             npx postcss --env production sass/index.scss -o static/index.css
             cp ${cv}/cv.pdf static/
             echo \"${self.shortRev or "HEAD"}\" >rev.json
