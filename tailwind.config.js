@@ -10,9 +10,10 @@ module.exports = {
                 meow: ['Recursive', 'sans-serif'],
             },
             keyframes: {
+                // transforms are applied right to left
                 'meow': {
-                    '0%': { transform: 'translate(-50%) scale(0.5)' },
-                    '100%': { transform: 'translate(-25%) scale(0.75)' },
+                    '0%': { transform: 'translate(-50%) rotate(-12deg) scale(0.5)' },
+                    '100%': { transform: 'translate(-25%) rotate(0) scale(0.75)' },
                 },
             },
             animation: { 'meow': 'meow 0.125s linear' },
