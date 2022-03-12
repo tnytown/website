@@ -1,7 +1,7 @@
 # The URL the site will be built for
 base_url = "https://tny.town"
 
-title = "doing bad things poorly"
+title = "tny.town"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = false
