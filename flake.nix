@@ -49,7 +49,12 @@
             TEXMFVAR = "/tmp/.texlive/texmf-var";
 
             buildPhase = ''
-                echo \"${self.shortRev or "HEAD"}\" >rev.json
+                cat <<EOF >rev.json
+                {
+                    "rev": "${self.shortRev or "HEAD"}",
+                    "modified": ${builtins.toString self.lastModified}
+                }
+                EOF
                 lualatex $src/cv.tex
                 mkdir -p $out && mv cv.pdf $out/
             '';

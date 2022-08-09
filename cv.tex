@@ -4,7 +4,7 @@
 \usepackage{graphicx}
 \usepackage{enumitem}
 
-\newcommand{\ghsubsection}[1]{\subsection{\href{https://github.com/knownunown/#1}{#1 \faGithub}}}
+\newcommand{\ghsubsection}[1]{\subsection{\href{https://github.com/tnytown/#1}{#1 \faGithub}}}
 
 \newcommand{\comment}[1]{}
 
@@ -14,14 +14,11 @@
 
 %% LaTeX font stuff: serif font
 \usepackage{ebgaramond}
-% \usepackage{mathpazo}
-% \renewcommand{\familydefault}{\sfdefault}
-% \renewcommand{\rmdefault}{}
 \renewcommand{\sfdefault}{\rmdefault}
 
 \usepackage[utf8]{inputenc}
 \usepackage[scale=0.9]{geometry}
-\usepackage{luacode} % nooooo
+\usepackage{luacode}
 
 %% Personal data
 \firstname{Andrew}
@@ -30,9 +27,9 @@
 \title{computation enthusiast}
 \homepage{tny.town}
 \email{hire@tny.town}
-\social[github]{knownunown}
+\social[github]{tnytown}
 \social[linkedin]{tny}
-\extrainfo{\href{https://tny.town/cv.pdf}{tny.town/cv.pdf} @ Git revision\githash}
+\extrainfo{Modified \lastmodified, Git revision\githash \makeheaddetailssymbol \href{https://tny.town/cv.pdf}{tny.town/cv.pdf}}
 
 \begin{document}
 \begin{luacode}
@@ -42,14 +39,17 @@ local f = io.open('rev.json', 'r')
 local s = f:read('*a')
 f:close()
 
-rev = utilities.json.tolua(s)
+print(s)
+nfo = utilities.json.tolua(s)
+rev = nfo.rev
+dat = os.date('\%b \%Y', nfo.modified)
 \end{luacode}
 
 \newcommand{\githash}
 {
-  \href{https://github.com/knownunown/website/blob/\luadirect{tex.sprint(rev)}/cv.tex}
-  {\texttt{\luadirect{tex.sprint(rev)}}}
-}
+  \href{https://github.com/tnytown/website/blob/\luadirect{tex.sprint(rev)}/cv.tex}
+  {\texttt{\luadirect{tex.sprint(rev)}}}}
+\newcommand{\lastmodified}{\luadirect{tex.sprint(dat)}}
 
 \makecvtitle{}
 \vspace*{-15mm} % decrease header padding
