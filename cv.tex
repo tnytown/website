@@ -3,13 +3,13 @@
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{enumitem}
+\usepackage{tikz}
 
-\newcommand{\ghsubsection}[1]{\subsection{\href{https://github.com/tnytown/#1}{#1 \faGithub}}}
+\newcommand{\ghsubsection}[1]{\subsection{\href{https://github.com/tnytown/#1}{#1\texorpdfstring{ \faGithub}{}}}}
 
 \newcommand{\comment}[1]{}
 
 \moderncvtheme[blue]{banking}
-% \moderncvtheme[blue]{casual}
 \nopagenumbers{}
 
 %% LaTeX font stuff: serif font
@@ -56,57 +56,64 @@ dat = os.date('\%b \%Y', nfo.modified)
 
 \section{Education}
 \cventry{2019--present}
+{Bachelor of Arts in Computer Science}
+{University of Minnesota}
+{}{}
 {
-  Bachelor of Arts in Computer Science}{University of Minnesota}{}{3.793 GPA}{Currently \textbf{3rd year}. Dean's List S2020-F2021. Waller Scholarship recipient 2021. Pursuing French Studies and Philosophy minors.
-}
-
-\comment{
-\subsection{selected CSCI coursework}
-\cvlistitem{CSCI2021, Machine Architecture and Organization}
-\cvlistitem{CSCI2041, Advanced Programming Principles}
-\cvlistitem{CSCI2033, Elementary Computational Linear Algebra}
-\cvlistitem{CSCI5551, Introduction to Intelligent Robotic Systems (in-progress)}
-\cvlistitem{CSCI4611, Programming Interactive Computer Graphics and Games (in-progress)}
+  Currently \textbf{4th year}. Dean's List S2020-F2021. Waller Scholarship recipient 2021. Pursuing French Studies and Philosophy minors.
 }
 
 \section{Experiences}
-\cvline{}{
-  \textit{Further details and work samples available \href{mailto:hire@tny.town}{\underline{on request}}.}
-}
-\cvitem{Adamala-Engelhart Lab\\2021-present}
+\cvline{}{\textit{Further details and work samples available \href{mailto:hire@tny.town}{\underline{on request}}.}}
+
+\cventry
+    {May--August 2022}{Software Engineer Intern}{CrowdStrike}{}{}
+    {
+      \begin{itemize}[label=\rightarrow,noitemsep]
+      \item Instrumented Go service and built Grafana dashboard to expose per-endpoint response metrics.
+      \item Retooled Makefile-based build system to support integration of Rust library into Go service.
+      \item Developed, tested, and deployed new features in Go services with Jenkins, Kubernetes, and Spinnaker.
+      \end{itemize}
+    }
+
+\cventry{2022--present}{Teaching Assistant}{College of Science and Engineering}{}{}
 {
-  Undergraduate Research Assistant at the Adamala-Engelhart Lab of the University of Minnesota.
+  \begin{itemize}[label=\rightarrow,noitemsep]
+  \item Provided feedback on student assignment submissions, conducted weekly labs.
+  \end{itemize}
+}
+\cventry{2021--present}{Undergraduate Research Assistant}{Adamala-Engelhart Lab}{}{}
+{
   \begin{itemize}[label=\rightarrow,noitemsep]
   \item Maintaining a predominantly Python Flask+SQLAlchemy app to enable research with synthetic biology of cyanobacteria.
-  \item Retrofitting a novel and intuitive VueJS interface on top of the Flask app.
+  \item Retrofitted a novel and intuitive VueJS interface on top of the Flask app.
   \item Exploring novel applications of computing to synthetic biology research.
   \end{itemize}
 }
    
-
-\cvitem{ACM UMN\\2020--present}
+\cventry{2020--present}{Generalist, Webmaster, Vice President}{ACM UMN}{}{}
 {
-  Officer (webmaster) for ACM UMN, the local chapter of the Association for Computing Machinery.
   \begin{itemize}[label=\rightarrow,noitemsep]
-  \item Involved in planning the first and only online MinneHack (largest hackathon in Minnesota). Prepared promotional materials and executed a non-traditional hackathon structure, collaborating with other ACM officers.
-  \item Currently maintaining web presence for the ACM UMN, static sites checked with GitHub Actions CI and Nix.
-  \item Continuing to plan events and engaging with students interested in computing.
+  \item Planned the first and only online MinneHack (Minnesota's largest hackathon) with the ACM officers. Prepared promotional materials and executed a non-traditional hackathon structure.
+  \item Maintained web presence for the ACM UMN, static sites checked with GitHub Actions CI and Nix.
+  \item Conducting events for students interested in computing, including UNIX classes and Capture The Flag.
   \end{itemize}
 }
 
-\cvitem{UMN SVP\\2019--2020}
+\comment{
+\cventry{2019--2020}{Member, Controls Team}{UMN Solar Vehicle Project}{}{}
 {
-  Member of the Controls subteam on the UMN Solar Vehicle Project.
   \begin{itemize}[label=\rightarrow,noitemsep]
   \item Worked on design of the rearview system and integrated USB tethered logging for the telemetry system.
   \item Prototyped an editor for a YAML-based CAN packet definition schema in Rust.
   \item Participated extensively in build cycle (layups) for the Freya vehicle, which won 1st place at the Formula Sun Grand Prix.
   \end{itemize}
-}
+}}
 
 \section{Trivia}
 \cvline{}{
-  \textit{Ask me (almost) anything about the following things.}
+  \textit{Ask me about the following things.}
+  \pdfliteral page{q 3 Tr}{This section is mostly for keyword scrapers.}\pdfliteral page{Q} % https://tex.stackexchange.com/questions/463968/hide-text-from-displaying-but-retain-it-selectable-and-searchable
 }
 
 \cvdoubleitem
@@ -129,9 +136,22 @@ dat = os.date('\%b \%Y', nfo.modified)
   Git, CI/CD, Reverse Engineering, r2, Go, C/C++
 }
 
-\section{Personal Projects and Open Source Contributions}
+\section{Personal Projects}
 \cvline{}{
   \textit{\href{https://github.com/knownunown}{\faGithub\ \underline{Check out more on my GitHub profile}!}}
+}
+
+\ghsubsection{website}
+\cvitem{keywords}{blog, writing, nix}
+
+\cvitem{}{Personal blog with posts related to software.}
+
+\comment{
+\ghsubsection{imsUS}
+\cvitem{keywords}{reverse engineering, rust, telephony, networking}
+\cvitem{}{Reverse engineered ``Call from iPhone'' stack on macOS. Reimplemented
+  IKEv2/EAP-TLS, IMS, and SIP registration to send and recieve text messages
+  over WiFi with mobile number from commodity computers.}
 }
 
 \ghsubsection{tpl-c900-openwrt-install}
@@ -145,9 +165,10 @@ dat = os.date('\%b \%Y', nfo.modified)
   with standard Unix tools. Wrote an accompanying minifier to compress the script down
   \char`\~291\%, final size 2kb.}
 
+\comment{
 \ghsubsection{J2V8}
 \cvitem{keywords}{cpp, nodejs, android, docker}
 \cvitem{}{Ported J2V8, Java bindings for the NodeJS JavaScript engine, to
   Android. Automated build process with a Docker image. Submitted changes to upstream.}
-
+}
 \end{document}

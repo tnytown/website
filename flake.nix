@@ -19,6 +19,8 @@
               scheme-small
               # color overrides, maybe unnecessary now
               xcolor
+              # tikz
+              pgf
               # layout
               arydshln multirow enumitem
               # lua ...
@@ -68,6 +70,7 @@
             buildInputs = with pkgs; [ zola nodejs ];
             phases = [ "unpackPhase" "buildPhase" ];
             buildPhase = ''
+            HOME=$(mktemp -d)
             ln -s ${yarnDeps}/libexec/website/node_modules .
             npx postcss --env production sass/index.scss -o static/index.css
             cp ${cv}/cv.pdf static/

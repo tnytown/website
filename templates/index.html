@@ -27,15 +27,19 @@
       </ul>
     </nav>
   </div>
-  <div class="hidden md:flex flex-col m-auto items-center">
-    {% set posts = get_section(path="posts/_index.md") %}
-    {% set post = posts.pages.0 %}
+  {% set posts = get_section(path="posts/_index.md") %}
+  {% set post = posts.pages.0 %}
+  <a class="bg-gray-800 hover:bg-gray-700"
+     href="{{ post.permalink }}">
+    <div class="hidden md:flex flex-col m-auto items-center">
     <h1 class="text-3xl">latest post: {{ post.title }}</h1>
-    <article class="my-2">
+    <article class="my-2 z-10">
       <div class="prose prose-lg prose-dark prose-yellow max-w-xl">{{ post.summary | safe }}</div>
     </article>
-    <a class="hover:underline text-1xl" href="{{ post.permalink }}">read more →</a>
-  </div>
-  <img class="absolute bottom-0 -z-10 max-w-[16rem] mx-auto left-0 right-0 md:left-auto" src="{{ get_url(path='sakamoto_nobg.png') }}" />
+    <span class="hover:underline text-1xl">read more →</span>
+     </div></a>
+  <img class="absolute bottom-0 max-w-[16rem] mx-auto left-0 right-0 md:left-auto"
+       alt="digital art of cute cat"
+       src="{{ get_url(path='sakamoto_nobg.png') }}" />
 </main>
 {% endblock content %}

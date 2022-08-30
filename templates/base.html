@@ -1,6 +1,9 @@
 {%if section %}
+{% set title = section.title %}
 {% set navname = section.components | first %}
-{% else %}{% set navname = page.components | first %}
+{% else %}
+{% set title = page.title %}
+{% set navname = page.components | first %}
 {% endif %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <title>{% block title %}{{ title }} | {{ config.title }}{% endblock title %}</title>
 
     {% block css %}
     <link rel="stylesheet" href="{{ get_url(path='index.css') }}">
@@ -31,7 +34,7 @@
 
   <body class="bg-gray-900 text-gray-50">
     {% block content %}
-    <div class="flex flex-col items-center md:max-w-screen-md min-h-stretch md:min-h-screen mx-auto divide-solid divide-y-2">
+    <div class="flex flex-col items-center px-2 md:max-w-screen-md min-h-stretch md:min-h-screen mx-auto divide-solid divide-y-2">
       <header class="w-full">
         <nav class="p-4 text-2xl font-mono w-full">
           <ul class="m-auto w-full text-center md:text-right"> {# evil alignment hacks #}

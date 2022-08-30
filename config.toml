@@ -18,12 +18,15 @@ generate_feed = true
 
 minify_html = true
 
+taxonomies = [
+{ name = "tags", feed = false },
+]
 [extra]
 # Put all your custom variables here
 menu = [
-     { url = "/posts", name = "posts" },
-     { url = "/about", name = "about" },
-     { url = "/cv.pdf", name = "cv" },
-     { url = "https://github.com/knownunown", name = "github" },
+{ url = "/posts", name = "posts" },
+{ url = "/about", name = "about" },
+{ url = "/cv.pdf", name = "cv" },
+{ url = "https://github.com/tnytown", name = "github" },
 ]
 author = "Andrew Pan"
