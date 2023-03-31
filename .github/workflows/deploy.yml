@@ -6,15 +6,13 @@ on:
 
 permissions: 
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  site:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,11 +27,18 @@ jobs:
           pushFilter: "(-source$|-node-dependencies-)"
       - name: nix build
         run: nix build -L .#site
-      - name: Setup Page
-        uses: actions/configure-pages@v3
-      - name: Upload Page
+      - name: Upload Artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: './result'
+
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Setup Page
+        uses: actions/configure-pages@v3
       - name: Deploy Page
         uses: actions/deploy-pages@v2
