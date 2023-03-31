@@ -1,0 +1,100 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta content="width=device-width,initial-scale=1" name=viewport><title>syscalling for fun and (no) profit | tny.town</title><link href=https://tny.town/index.css rel=stylesheet><meta content="Syscalling For Fun And (No) Profit" property=og:title><meta content="A shallow exploration of the Linux userspace interface with poorly written C and the fish shell." property=og:description><meta content=article property=og:type><meta content="Andrew Pan" property=author><meta content="Andrew Pan" property=article:author><meta content=systems property=article:tag><meta content=linux property=article:tag><meta content=fish property=article:tag><meta content=tny.town property=og:site_name><meta content=https://tny.town/apple-touch-icon-180x180.png property=og:image><meta content=https://tny.town/posts/syscalling-for-fun-and-no-profit/ property=og:url><link href=https://tny.town/atom.xml rel=alternate title=Atom type=application/atom+xml><body class="bg-gray-900 text-gray-50"><div class="flex flex-col items-center px-2 md:max-w-screen-md min-h-stretch md:min-h-screen mx-auto divide-solid divide-y-2"><header class=w-full><nav class="p-4 text-2xl font-mono w-full"><ul class="m-auto w-full text-center md:text-right"><li class="mx-2 inline md:float-left"><a class="mx-auto group" href=/> <img class="w-8 h-8 inline rounded-full group-hover:outline" alt=home src=https://tny.town/sakamoto.png> <span class="hidden origin-bottom -z-10 md:group-hover:inline-block md:scale-75 md:translate-x-[-25%] md:group-hover:animate-meow font-meow"> meow! </span> </a><li class="mx-2 inline"><a class="underline hover:no-underline" href=/posts>posts</a><li class="mx-2 inline"><a class=hover:underline href=/about>about</a><li class="mx-2 inline"><a class=hover:underline href=/cv.pdf>cv</a><li class="mx-2 inline"><a class=hover:underline href=https://github.com/tnytown>github</a></ul></nav></header><main class="w-full pt-4 pb-4 flex-grow"><article class=px-4><h1 class="text-3xl mb-2">syscalling for fun and (no) profit</h1><h3 class="my-2 text-gray-400">2021-02-28 | ~1688 words</h3><div class="prose prose-lg prose-dark prose-yellow max-w-max" id=content><p>I recently had a (self-inflicted) problem in my <a href=https://www-users.cs.umn.edu/~kauffman/4061/>Operating Systems course</a>. To expose us to the wonders of programming in a Unix environment, we were tasked with building a rudimentary "shell". To make the assignment more interesting to my partner and I, we decided to avoid <code>libc</code> and use Linux system calls directly <sup class=footnote-reference><a href=#1>1</a></sup>.</p><span id=continue-reading></span><h3 id=wait-what>wait, what?</h3><p>What does this even entail? On x86-64 Linux, the only platform this assignment needs to run on, it's easier than one would expect. Syscalls are distinguished by unique their <em>number</em> and the <em>arguments</em> they take. Linux syscalls are ABI-stable, which means that the behavior of any one syscall number is guaranteed to never change <sup class=footnote-reference><a href=#2>2</a></sup>. To invoke a syscall, one needs to:<ol><li>store the desired syscall <em>number</em> in <code>rax</code><li>pass a maximum of 6 <em>arguments</em> in registers <code>rdi</code>, <code>rsi</code>, <code>rdx</code>, <code>r10</code>, <code>r8</code>, and <code>r9</code><li>use the <code>syscall</code> instruction.</ol><p>Notice something familiar in step 2? That's the <a href=https://wiki.osdev.org/System_V_ABI#Calling_Convention>System V x86-64 calling convention</a>! We pass arguments into syscalls the same way that we pass arguments into normal function calls. The only difference is that instead of calling the function via the <code>call</code> instruction, we have to denote the syscall number via <code>rax</code> and invoke the syscall with the <code>syscall</code> instruction.<h2 id=zero-cost-abstractions>zero-cost abstractions</h2><p>Manually writing out all the <code>syscall</code> invocations for the syscalls that we needed to use felt a bit tedious. Instead, I decided to write a few functions abstracting over the required inline assembly, with which I generated syscall wrappers.<h3 id=a-false-start>a false start</h3><p>If you can play it slowly, you can play it quickly. I started small by implementing only one wrapper for a syscall with one argument. This was my initial attempt.<pre class=language-c data-lang=c><code class=language-c data-lang=c>int64_t syscall1(no, a1)
+  register int64_t no asm("rax");
+  register int64_t a1 asm("rdi");
+{
+  asm volatile("syscall" : "+r"(no) : "r"(a1) : "rcx", "r11", "memory");
+  return no;
+}
+</code></pre><p>Through previous projects, I learnt about <a href=https://gcc.gnu.org/onlinedocs/gcc/Local-Register-Variables.html#Local-Register-Variables>some GCC-specific trickery that allows us to control register allocation</a>. However, I wasn't able to declare function arguments as such.<pre class=language-c data-lang=c><code class=language-c data-lang=c>static inline int64_t syscall1(register int64_t no asm("rax"), register int64_t a1 asm("rdx"))
+</code></pre><p>The above is apparently NOT syntactically valid. To hack around that, I used <a href=https://en.wikipedia.org/wiki/C_(programming_language)#K&R_C>K&R style function declarations</a>. This compiles, but the <code>no</code> and <code>a1</code> arguments were not assigned to the registers I wanted them to be in.<figure><img alt="screenshot of incorrect disassembly" src=Untitled.png><figcaption>WTF?</figcaption></figure><p>Looking back, this result was not a surprise. Being able to control register allocation for function arguments blatantly breaks calling convention and would make things impossible to link. Besides, K&R function declaration syntax is incredibly cursed, not to mention deprecated. The question remains: how should we write these wrappers?<h3 id=the-kosher-way>the kosher way</h3><p>Trying to be cool and using <em>exotic compiler features</em> netted me a great deal of pain, so I just decided to do it "normally".<pre class=language-c data-lang=c><code class=language-c data-lang=c>int64_t syscall1(int64_t a1, int64_t no) {
+  asm volatile("movq %0, %%rax\n\t"
+               "syscall"
+               : "+g"(no) // r/w: syscall number
+               : "r"(a1)
+               : "rcx", "r11", "memory");
+  return no;
+}
+</code></pre><p>I decided to exploit the inherent similarity between the system call ABI and normal System V function calls. To ensure that the arguments are passed in the correct order, I moved the syscall number <code>no</code> argument to the end. In the event that there are more than 6 arguments in the wrapper <sup class=footnote-reference><a href=#3>3</a></sup>, the <code>no</code> argument overflows into memory. We <code>mov</code> the syscall number into <code>eax</code> where the kernel expects it, and likewise modify the register constraint for <code>no</code> to <code>+g</code> to reflect the possibility of it not being a register.<p><img alt="screenshot of correct disassembly" src=https://tny.town/posts/syscalling-for-fun-and-no-profit/Untitled%201.png><p>As you can see, this one seemed to generate valid code. I then wrote <code>syscall2</code> through <code>syscall6</code> with the same pattern, then got to work on generating the real syscall wrappers.<h2 id=generating-the-syscall-wrappers>generating the syscall wrappers</h2><p>Believe it or not, there is no central location which contains definitions for all the syscalls. Canonically, it is libc's responsibility to provide those wrappers. Their prototypes are split up across various arbitrarily named header files, with arguments and constants for those further split up into other header files. The best place to find prototypes and headers lies within the manpages, specifically section 2. Our task now is to parse those manpages and turn them into syscall definitions utilizing our assembly wrappers.<h3 id=into-the-belly-of-the-beast>into the belly of the beast</h3><p>The Linux manpages are generated with <code>groff</code>, an archaic typesetter. Optimally, we want to "parse" the original <code>groff</code> markup to get the data we need. Fortunately, <code>man</code> provides a mechanism to get the path of the markup files from which it displays its output: the <code>-w</code> flag <sup class=footnote-reference><a href=#4>4</a></sup>. Since this provides the path to gzipped markup, I had to <code>zcat</code> it to get the text. This yielded the following for <code>read(2)</code>:<pre><code>&LTsnip>
+.TH READ 2 2018-02-02 "Linux" "Linux Programmer's Manual"
+.SH NAME
+read \- read from a file descriptor
+.SH SYNOPSIS
+.nf
+.B #include &LTunistd.h>
+.PP
+.BI "ssize_t read(int " fd ", void *" buf ", size_t " count );
+.fi
+.SH DESCRIPTION
+.BR read ()
+attempts to read up to
+.I count
+bytes from file descriptor
+.I fd
+into the buffer starting at
+.IR buf .
+.PP
+&LTsnip>
+</code></pre><p>While archaic and not as nice when compared to asciidoc, this is workable with some judicious <code>sed</code> and my hammer of choice, fish shell.<h3 id=sed-to-the-rescue><code>sed</code> to the rescue</h3><p><code>groff</code> seems to have some semblance of structure in the form of sections. We can pinpoint and preprocess specific sections to work on with this <code>sed</code> snippet.<pre><code>/^\.SH SYNOPSIS/,/^\.SH.*/ {
+/^\.SH/D             # delete section headers
+s/"|;//g             # delete quotation marks, semis
+s/^\.[A-Za-z]+ *//g  # delete preceding directives
+s/\/\*.+\*\///g      # delete C89 comments
+p                    # print
+}
+</code></pre><p>The function prototypes and <code>#include</code> directives usually reside in the synopsis section, so we match for that with <code>/^\.SH SYNOPSIS/,/^\.SH.*/</code>. This matches ranges of lines beginning with a <code>.SH SYNOPSIS</code> and ending with any arbitrary <code>.SH</code> command, which denotes the next header. We specify multiple commands in the body of the sed match to clean up <code>groff</code> markup cruft, leaving only the <code>#include</code> and prototype.<pre><code>#include &LTunistd.h>
+
+ssize_t read(int  fd , void * buf , size_t  count )
+</code></pre><p>Now that we have the prototype, the next issue is generating the call to the <code>syscall</code> wrapper. The only real challenge here is extricating the variable names from their types. This is achievable with some <code>grep</code>.<pre class=language-bash data-lang=bash><code class=language-bash data-lang=bash>$ echo 'ssize_t read(int  fd , void * buf , size_t  count )' | grep -oE '[0-9a-zA-Z_]+ *(,|\))'
+fd ,
+buf ,
+count )
+</code></pre><p>We still have some spurious tokens in there, but a quick pipe to <code>tr -d ',)'</code> solves that problem.<p>One more additional thing of interest is how we get the syscall number. Those are all defined in <code>sys/syscall.h</code> as macros, but where that file is located is entirely system-dependent. Luckily, we can make <code>gcc</code> do the work for us. The <code>-E -dM</code> flags, as <a href=https://stackoverflow.com/a/2224357>this StackOverflow answer</a> helpfully points out, dumps a list of all the preprocessor macros that are defined. We can then use <code>sed</code> with a capture group to grab the number.<pre class=language-bash data-lang=bash><code class=language-bash data-lang=bash>$ echo '#include &LTsys/syscall.h>' | gcc -E -dM -x c - | sed -En "s/#define __NR_read +([0-9]+)/\1/p"
+0
+</code></pre><p>With the argument names and syscall number we can munge together a call to the appropriate <code>syscall</code> wrapper in our function declaration (which we derive from the prototype). We can then generate a halfway sane header file <sup class=footnote-reference><a href=#5>5</a></sup>:<pre class=language-c data-lang=c><code class=language-c data-lang=c>// This file was generated by mklibsysc.
+#ifndef LIBSYSC_H_
+#define LIBSYSC_H_
+
+#include &LTfcntl.h>
+#include &LTstdint.h>
+#include &LTunistd.h>
+
+// &LTsnip: syscall0 ... syscall6>
+//$syscalls=read,write,dup,dup2,exit_group
+
+#define read libsysc_read
+ __attribute__((noinline)) ssize_t libsysc_read(int  fd , void * buf , size_t  count ) { return syscall3 ( fd , buf , count , 0 ); }
+#define write libsysc_write
+ __attribute__((noinline)) ssize_t libsysc_write(int  fd , const void * buf , size_t  count ) { return syscall3 ( fd , buf , count , 1 ); }
+#define dup libsysc_dup
+ __attribute__((noinline)) int libsysc_dup(int  oldfd ) { return syscall1 ( oldfd , 32 ); }
+#define dup2 libsysc_dup2
+ __attribute__((noinline)) int libsysc_dup2(int  oldfd , int  newfd ) { return syscall2 ( oldfd , newfd , 33 ); }
+#define exit_group libsysc_exit_group
+ __attribute__((noinline)) void libsysc_exit_group(int  status ) { syscall1 ( status , 231 ); }
+#endif // LIBSYSC_H_
+</code></pre><p>This looks a bit ugly, but <code>clang-format</code> can fix it. Regardless, not bad for a shell script and some regex.<h2 id=trying-it-out>trying it out</h2><p>Now that we have all these syscall wrappers, it's time to write a program to test a few of them.<pre class=language-c data-lang=c><code class=language-c data-lang=c>#include "libsysc.h"
+
+asm(".global _start\n\t"
+    "_start:\n\t"
+    "mov (%rsp), %edi\n\t"
+    "leaq 8(%rsp), %rsi\n\t"
+    "call main\n\t"
+    "mov $0, %edi\n\t"
+    "call libsysc_exit_group\n\t"
+    "syscall");
+
+int main(int argc, char *argv[]) {
+  char buf[4];
+  if (argc > 0)           // lol
+    write(1, argv[0], 7); // ./a.out
+
+  write(1, "\nName: ", 7);
+  read(0, buf, 4);
+  write(1, "hello ", 6);
+  write(1, buf, 4);
+  write(1, "!\n", 2);
+}
+</code></pre><p>That <code>asm</code> block at the beginning is some initialization code I stole <a href=https://stackoverflow.com/a/16722942>from StackOverflow</a> to replace the stdlib's built-in <code>_start</code> function that calls main. Roughly speaking, <code>argc</code> and <code>argv</code> is handed to the program on the stack, which we have to cram into the registers that <code>main</code> expects them in.<p>Now it's time to compile and run.<pre class=language-c data-lang=c><code class=language-c data-lang=c>$ gcc -nostdlib -fno-stack-protector x.c 2>/dev/null && echo 'andrew' | ./a.out
+./a.out
+Name: hello andr!
+</code></pre><p>🙂<h3 id=future-work>future work</h3><p>I've learnt that programming without the standard library is painful <sup class=footnote-reference><a href=#6>6</a></sup>. Later in the semester, we will build our own minimal vaguely POSIX-compliant libc atop of our syscall wrappers. Watch this space!<div class=footnote-definition id=1><sup class=footnote-definition-label>1</sup><p>... which was the plan, until I didn't finish the syscall layer in time.</div><div class=footnote-definition id=2><sup class=footnote-definition-label>2</sup><p>On Linux anyways.</div><div class=footnote-definition id=3><sup class=footnote-definition-label>3</sup><p><code>syscall6</code>, the wrapper for syscalls with 6 arguments, has 7 arguments in total due to the <code>no</code> argument.</div><div class=footnote-definition id=4><sup class=footnote-definition-label>4</sup><p>You can read all about it by running <code>man man</code>.</div><div class=footnote-definition id=5><sup class=footnote-definition-label>5</sup><p><code>mklibsysc</code> only generates wrappers for syscalls specified in the input, which is why there are only 5 in the list.</div><div class=footnote-definition id=6><sup class=footnote-definition-label>6</sup><p>To be honest though, it's not that big of a downgrade when compared to libc.</div></div></article></main><footer class="p-4 text-gray-400">Content CC-BY-SA 4.0. Built with Zola and Nix. Revision <a class=hover:underline href=https://github.com/knownunown/website/commit/8a1301c>8a1301c</a>. <aside class=hidden>Void where prohibited. No warranty, express or implied. Phosphate free.</aside></footer></div>

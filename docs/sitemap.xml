@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://tny.town/</loc>
+    </url>
+    <url>
+        <loc>https://tny.town/about/</loc>
+    </url>
+    <url>
+        <loc>https://tny.town/blog/</loc>
+    </url>
+    <url>
+        <loc>https://tny.town/posts/</loc>
+    </url>
+    <url>
+        <loc>https://tny.town/posts/syscalling-for-fun-and-no-profit/</loc>
+        <lastmod>2021-02-28</lastmod>
+    </url>
+    <url>
+        <loc>https://tny.town/posts/x570-itx-tb3-heatsink/</loc>
+        <lastmod>2021-01-05</lastmod>
+    </url>
+</urlset>

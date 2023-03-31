@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>tny.town</title>
+    <link href="https://tny.town/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://tny.town"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2021-02-28T00:00:00+00:00</updated>
+    <id>https://tny.town/atom.xml</id>
+    <entry xml:lang="en">
+        <title>syscalling for fun and (no) profit</title>
+        <published>2021-02-28T00:00:00+00:00</published>
+        <updated>2021-02-28T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://tny.town/posts/syscalling-for-fun-and-no-profit/" type="text/html"/>
+        <id>https://tny.town/posts/syscalling-for-fun-and-no-profit/</id>
+        
+        <summary type="html">&lt;p&gt;I recently had a (self-inflicted) problem in my &lt;a href=&quot;https:&#x2F;&#x2F;www-users.cs.umn.edu&#x2F;~kauffman&#x2F;4061&#x2F;&quot;&gt;Operating Systems course&lt;&#x2F;a&gt;. To expose us to the wonders of programming in a Unix environment, we were tasked with building a rudimentary &amp;quot;shell&amp;quot;. To make the assignment more interesting to my partner and I, we decided to avoid &lt;code&gt;libc&lt;&#x2F;code&gt; and use Linux system calls directly .&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>X570 ITX TB3 heatsink</title>
+        <published>2021-01-05T00:00:00+00:00</published>
+        <updated>2021-01-05T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://tny.town/posts/x570-itx-tb3-heatsink/" type="text/html"/>
+        <id>https://tny.town/posts/x570-itx-tb3-heatsink/</id>
+        
+        <summary type="html">&lt;p&gt;The default upper MOSFET heatsink on the ASRock X570 ITX TB3 is too big. It&#x27;s unwieldy, blocks airflow, and worst of all, not better at sinking heat when compared to smaller solutions.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+</feed>
