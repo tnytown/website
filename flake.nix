@@ -13,6 +13,8 @@
             src = ./.;
             packageJSON = "${src}/package.json";
             yarnLock = "${src}/yarn.lock";
+	    dontStrip = true;
+	    dontFixup = true;
           };
           texenv = (pkgs.texlive.combine {
             inherit (pkgs.texlive)
@@ -59,7 +61,7 @@
                 EOF
                 lualatex $src/cv.tex
                 mkdir -p $out && mv cv.pdf $out/
-            '';
+            ''; 
           };
 
           inherit yarnDeps;
