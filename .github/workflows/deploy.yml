@@ -26,11 +26,14 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           pushFilter: "(-source$|-node-dependencies-)"
       - name: nix build
-        run: nix build -L .#site
+        run: |
+          nix build -L .#site
+          # https://github.com/actions/deploy-pages/issues/58
+          cp --recursive --dereference --no-preserve=mode,ownership result public
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './result'
+          path: './public'
 
   deploy:
     needs: build
