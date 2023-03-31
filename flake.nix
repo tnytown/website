@@ -1,12 +1,14 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-21.11-small";
+    unstable.url = "nixpkgs/nixos-unstable-small";
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, utils }: utils.lib.eachDefaultSystem
+  outputs = { self, nixpkgs, unstable, utils }: utils.lib.eachDefaultSystem
     (system:
       let pkgs = nixpkgs.legacyPackages.${system};
+          unstablePkgs = unstable.legacyPackages.${system};
           lib = nixpkgs.lib;
           yarnDeps = pkgs.mkYarnPackage rec {
             name = "site-styles";
@@ -38,6 +40,7 @@
           buildInputs = with pkgs; [ texenv tectonic zola nodejs yarn ];
         };
         packages = rec {
+	  zola = unstablePkgs.zola;
           texdbg = pkgs.mkShell {
             buildInputs = [ texenv ];
           };

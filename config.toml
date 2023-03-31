@@ -19,8 +19,9 @@ generate_feed = true
 minify_html = true
 
 taxonomies = [
-{ name = "tags", feed = false },
+{ name = "tags", feed = false, render = false },
 ]
+
 [extra]
 # Put all your custom variables here
 menu = [
