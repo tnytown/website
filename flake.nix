@@ -57,7 +57,7 @@
             zola
             nodejs
             yarn
-            inotify-tools
+            # inotify-tools
           ];
         };
         formatter = pkgs.nixfmt-tree;
