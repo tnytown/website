@@ -4,6 +4,9 @@
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{tikz}
+\usepackage{hyperref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
 
 \newcommand{\ghsubsection}[1]{\subsection{\href{https://github.com/tnytown/#1}{#1\texorpdfstring{ \faGithub}{}}}}
 
@@ -17,7 +20,7 @@
 \renewcommand{\sfdefault}{\rmdefault}
 
 \usepackage[utf8]{inputenc}
-\usepackage[scale=0.9]{geometry}
+\usepackage[scale=0.8]{geometry}
 \usepackage{luacode}
 
 %% Personal data
@@ -29,7 +32,7 @@
 \email{hire@tny.town}
 \social[github]{tnytown}
 \social[linkedin]{tny}
-\extrainfo{Modified \lastmodified, Git revision\githash \makeheaddetailssymbol \href{https://tny.town/cv.pdf}{tny.town/cv.pdf}}
+\extrainfo{Modified \lastmodified, Git revision\githash}
 
 \begin{document}
 \begin{luacode}
@@ -54,122 +57,74 @@ dat = os.date('\%b \%Y', nfo.modified)
 \makecvtitle{}
 \vspace*{-15mm} % decrease header padding
 
-\section{Experiences}
-\cvline{}{\textit{Further details and work samples available \href{mailto:hire@tny.town}{\underline{on request}}.}}
+\section{experiences}
+\cvline{}{\textit{further details and work samples available \href{mailto:hire@tny.town}{on request}.}}
+\cventry{}{Security Engineer, Research}{Trail of Bits}{}{}
+{
+  \begin{itemize}[label=\rightarrow,noitemsep]
+  \item \href{https://github.com/sigstore/sigstore-rs/issues?q=is\%3Apr\%20author\%3A\%40tnytown\%20OR\%20author\%3A\%40jleightcap}{implemented and upstreamed} new rust sigstore client, enabling signing and verification of data with ephemeral key material.
+  \item performed early work on \href{https://github.com/C2SP/x509-limbo}{x509-limbo}, a test suite for x.509 path validation building tools.
+  \item implemented tooling based on mlir and llvm to enable analysis and symbolic execution of programs.
+  \item consulted on engineering work with major clients involving packaging ecosystems, reverse engineering, and more.
+  \end{itemize}
+}
 \cventry
     {Summer 2022}{Software Engineer Intern}{CrowdStrike}{}{}
     {
       \begin{itemize}[label=\rightarrow,noitemsep]
-      \item Instrumented Go service and built Grafana dashboard to expose per-endpoint response metrics.
-      \item Retooled Makefile-based build system to support integration of Rust library into Go service.
-      \item Developed, tested, and deployed new features in Go services with Jenkins, Kubernetes, and Spinnaker.
+      \item instrumented go service and built grafana dashboard to expose per-endpoint response metrics.
+      \item retooled makefile-based build system to support integration of rust library into go service.
+      \item developed, tested, and deployed new features in go services with jenkins, kubernetes, and spinnaker.
       \end{itemize}
     }
 
-\cventry{2021--present}{Undergraduate Research Assistant}{Adamala-Engelhart Lab}{}{}
+\cventry{2021--2023}{Undergraduate Research Assistant}{Adamala-Engelhart Lab}{}{}
 {
   \begin{itemize}[label=\rightarrow,noitemsep]
-  \item Maintaining a predominantly Python Flask+SQLAlchemy app to enable research with synthetic biology of cyanobacteria.
-  \item Retrofitted a novel and intuitive VueJS interface on top of the Flask app.
-  \item Exploring novel applications of computing to synthetic biology research.
+  \item maintained a predominantly python flask+sqlalchemy app to enable research with synthetic biology of cyanobacteria.
+  \item explored novel applications of computing to synthetic biology research.
   \end{itemize}
 }
   
 \cventry{2020--2023}{Webmaster, Vice President}{ACM UMN}{}{}
 {
   \begin{itemize}[label=\rightarrow,noitemsep]
-  \item Planned the first and only online MinneHack (Minnesota's largest hackathon) with the ACM officers. Prepared promotional materials and executed a non-traditional hackathon structure.
-  \item Maintained web presence for the ACM UMN, static sites checked with GitHub Actions CI and Nix.
-  \item Conducting events for students interested in computing, including UNIX classes and Capture The Flag.
+  \item planned the first and only online minnehack (minnesota's largest hackathon) with the acm officers. prepared promotional materials and executed a non-traditional hackathon structure.
+  \item maintained web presence for the acm umn, static sites checked with github actions ci and nix.
+  \item conducted events for students interested in computing, including unix classes and capture the flag.
   \end{itemize}
 }
 
 \cventry{Fall 2022}{Teaching Assistant}{College of Science and Engineering}{}{}
 {
   \begin{itemize}[label=\rightarrow,noitemsep]
-  \item Provided feedback on student assignment submissions, conducted weekly labs.
+  \item provided feedback on student assignment submissions, conducted weekly labs.
   \end{itemize}
 }
 
-\comment{
-\cventry{2019--2020}{Member, Controls Team}{UMN Solar Vehicle Project}{}{}
-{
-  \begin{itemize}[label=\rightarrow,noitemsep]
-  \item Worked on design of the rearview system and integrated USB tethered logging for the telemetry system.
-  \item Prototyped an editor for a YAML-based CAN packet definition schema in Rust.
-  \item Participated extensively in build cycle (layups) for the Freya vehicle, which won 1st place at the Formula Sun Grand Prix.
-  \end{itemize}
-}}
-
-\section{Education}
+\section{education}
 \cventry{2019--2023}
 {Bachelor of Arts in Computer Science}
 {University of Minnesota}
 {}{}
 {
-  Dean's List, multiple semesters. Waller Scholarship recipient.
+  dean's list, multiple semesters. waller scholarship recipient. took french and philosophy classes.
 }
 
 
-\section{Trivia}
+\section{trivia}
 \cvline{}{
-  \textit{Ask me about the following things.}
-  \pdfliteral page{q 3 Tr}{This section is mostly for keyword scrapers.}\pdfliteral page{Q} % https://tex.stackexchange.com/questions/463968/hide-text-from-displaying-but-retain-it-selectable-and-searchable
+  \textit{ask me about the following things!}
+  \pdfliteral page{q 3 Tr}{this section is for keyword scrapers.}\pdfliteral page{Q} % https://tex.stackexchange.com/questions/463968/hide-text-from-displaying-but-retain-it-selectable-and-searchable
 }
 
-\cvdoubleitem
-{web}
-{
-  REST, PHP, Node, HTML/JS
+pki, ci/cd, rust, nixos/nixpkgs, aarch64 exception levels, binary ninja, hardware hacking, llvm/mlir, go
+
+\section{miscellanea}
+\cvitem{Publication}{The synthetic biology project I contributed to in my undergraduate years got published! You can cite us: \\
+Venero, O.M., Ndeh, R., \textbf{Pan, A.} et al. CyanoConstruct: simple platform for cyanobacterial expression construct assembly and translational tuning. BMC Biotechnol 26, 38 (2026). \href{https://doi.org/10.1186/s12896-025-01098-7}{https://doi.org/10.1186/s12896-025-01098-7}
 }
-{sysadmin}
-{
-  NixOS, UNIX-like OSes, awk, sed, Docker
-}
+\cvitem{Receipt printer}{I've been reverse engineering a bluetooth receipt printer so that I can print things without the vendor's mobile app. I've figured out how to print things, now all that's left is to polish the code up and publish!}
+\cvitem{Emacs}{The Emacs mac port used to sporadically crash when built with Nix. I \href{https://github.com/NixOS/nixpkgs/issues/127902\#issuecomment-1698365843}{figured out why} and \href{https://github.com/NixOS/nixpkgs/pull/252244}{fixed it}.}
 
-\cvdoubleitem
-{mobile}
-{
-  Java, Android apps, Frida
-}
-{misc}
-{
-  Git, CI/CD, Reverse Engineering, r2, Go, C/C++
-}
-
-\section{Personal Projects}
-\cvline{}{
-  \textit{\href{https://github.com/tnytown}{\faGithub\ \underline{Check out more on my GitHub profile}!}}
-}
-
-\ghsubsection{website}
-\cvitem{keywords}{blog, writing, nix}
-
-\cvitem{}{Personal blog with posts related to software.}
-
-\comment{
-\ghsubsection{imsUS}
-\cvitem{keywords}{reverse engineering, rust, telephony, networking}
-\cvitem{}{Reverse engineered ``Call from iPhone'' stack on macOS. Reimplemented
-  IKEv2/EAP-TLS, IMS, and SIP registration to send and recieve text messages
-  over WiFi with mobile number from commodity computers.}
-}
-
-\ghsubsection{tpl-c900-openwrt-install}
-\cvitem{keywords}{reverse engineering, embedded, unix, lua, go}
-\cvitem{}{Broke firmware verification scheme on the TP-Link Archer C900, a consumer
-  router. Installed open source router firmware (OpenWRT). Documented process.}
-
-\ghsubsection{u2dl}
-\cvitem{keywords}{web, fish, unix, ffmpeg}
-\cvitem{}{Developed Fish shell script to download YouTube videos. Bypassed the ``rolling cipher''
-  with standard Unix tools. Wrote an accompanying minifier to compress the script down
-  \char`\~291\%, final size 2kb.}
-
-\comment{
-\ghsubsection{J2V8}
-\cvitem{keywords}{cpp, nodejs, android, docker}
-\cvitem{}{Ported J2V8, Java bindings for the NodeJS JavaScript engine, to
-  Android. Automated build process with a Docker image. Submitted changes to upstream.}
-}
 \end{document}

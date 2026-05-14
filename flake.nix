@@ -44,7 +44,7 @@
               fontawesome5
               academicons
               # documentclass
-              moderncv 
+              moderncv
               ;
           }
         );
@@ -57,6 +57,7 @@
             zola
             nodejs
             yarn
+            inotify-tools
           ];
         };
         formatter = pkgs.nixfmt-tree;
