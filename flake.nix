@@ -44,7 +44,7 @@
               fontawesome5
               academicons
               # documentclass
-              moderncv
+              moderncv 
               ;
           }
         );
@@ -65,8 +65,8 @@
           texdbg = pkgs.mkShell {
             buildInputs = [ texenv ];
           };
-          cv = pkgs.stdenvNoCC.mkDerivation {
-            name = "cv";
+          resume = pkgs.stdenvNoCC.mkDerivation {
+            name = "resume";
             src = pkgs.nix-gitignore.gitignoreSource [ ] ./.;
             buildInputs = [ texenv ];
 
@@ -83,8 +83,8 @@
                   "modified": ${builtins.toString self.lastModified}
               }
               EOF
-              lualatex $src/cv.tex
-              mkdir -p $out && mv cv.pdf $out/
+              lualatex $src/resume.tex
+              mkdir -p $out && mv resume.pdf $out/
             '';
           };
 
@@ -105,7 +105,7 @@
               HOME=$(mktemp -d)
               ln -s ${yarnDeps}/libexec/website/node_modules .
               npx postcss --env production sass/index.scss -o static/index.css
-              cp ${cv}/cv.pdf static/
+              cp ${resume}/resume.pdf static/
               echo \"${self.shortRev or "HEAD"}\" >rev.json
               zola build -o $out
             '';
